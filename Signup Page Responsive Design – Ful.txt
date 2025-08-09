@@ -1,0 +1,141 @@
+Signup Page Responsive Design – Full Cheat Sheet
+1. Project Goal
+Layout:
+
+Left Panel: Image with slogan (hidden on mobile).
+
+Right Panel: Signup form with inputs, social logins, and T&C checkbox.
+
+Responsive:
+
+Mobile: Only form.
+
+Tablet/Desktop: Side-by-side image + form.
+
+UI Match: Follow reference design for spacing, colors, typography.
+
+2. Layout & Typography
+tsx
+-
+-
+<div className="text-center mb-12">
+  <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl text-white mb-4">
+    Create an account
+  </h1>
+  <p className="text-gray-400 mb-8">
+    Already have an account? <a href="#" className="text-white hover:underline">Log in</a>
+  </p>
+</div>
+Key Points:
+
+Use responsive font sizes (sm:, md: breakpoints).
+
+Add consistent spacing between title, subtitle, and form.
+
+Wrap in a centered container with margin/padding.
+
+3. Input Styling
+tsx
+-
+-
+const sharedInputStyle: React.CSSProperties = {
+  backgroundColor: "#2a2a2a",
+  border: "1px solid #404040",
+  borderRadius: "0.75rem",
+  padding: "1.25rem 1rem",
+  fontSize: "1.5rem",
+  color: "#ffffff",
+};
+Consistent background, border, padding, font size, color for all inputs.
+
+Apply Tailwind w-full focus:outline-none focus:ring-1 focus:ring-gray-500.
+
+4. Input Arrangement
+First & Last Name Row:
+
+tsx
+-
+-
+<div className="grid grid-cols-2" style={{ columnGap: '2rem' }}>
+  {/* Inputs */}
+</div>
+Vertical Stack:
+
+tsx
+-
+-
+<div style={{ display: 'flex', flexDirection: 'column', rowGap: '2rem' }}>
+  {/* Rows & inputs */}
+</div>
+5. Terms & Conditions
+tsx
+-
+-
+<div className="flex items-center" style={{ columnGap: '1rem' }}>
+  <input type="checkbox" id="terms" style={{ width: '20px', height: '20px', backgroundColor: '#2a2a2a', border: '1px solid #404040', borderRadius: '4px' }} />
+  <label htmlFor="terms" style={{ fontSize: '1.125rem', color: '#9ca3af' }}>
+    I agree to the <a href="#" className="hover:underline" style={{ color: '#ffffff' }}>Terms & Conditions</a>
+  </label>
+</div>
+Bigger checkbox for accessibility.
+
+Label text in muted color, link in white.
+
+6. Divider
+tsx
+-
+-
+<div className="flex items-center text-gray-400 mb-8">
+  <hr className="flex-grow border-gray-600" />
+  <span className="mx-4">Or register with</span>
+  <hr className="flex-grow border-gray-600" />
+</div>
+7. Social Login Buttons
+tsx
+-
+-
+import { FcGoogle } from "react-icons/fc";
+import { FaLinkedinIn, FaGithub } from "react-icons/fa";
+Flexbox for layout.
+
+Use react-icons for consistent professional icons.
+
+Same background/border style for all providers.
+
+8. Responsive Layout
+tsx
+-
+-
+<div className="h-screen flex flex-col lg:flex-row">
+  <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-purple-600 to-purple-900"
+       style={{ backgroundImage: `url(${signupBackground})`, backgroundSize: "cover" }}>
+    {/* Left content */}
+  </div>
+  <div className="w-full lg:w-1/2 bg-[#1a1a1a] flex items-start justify-center">
+    {/* Form */}
+  </div>
+</div>
+Mobile: Image hidden (hidden lg:flex).
+
+Desktop: Equal width (lg:w-1/2).
+
+9. Page Padding & Container Styling
+tsx
+-
+-
+<div className="h-screen flex flex-col lg:flex-row p-8 bg-neutral-900">
+  <div className="hidden lg:flex lg:w-1/2 rounded-2xl overflow-hidden shadow-xl">
+    {/* Left */}
+  </div>
+  <div className="w-full lg:w-1/2 rounded-2xl overflow-hidden shadow-xl bg-[#1a1a1a]">
+    {/* Right */}
+  </div>
+</div>
+Outer padding (p-8) for gutters.
+
+Rounded corners & shadow for polish.
+
+Replace fixed margins with responsive padding (px-6 md:px-8).
+
+10. Debugging Tips
+Check window.innerWidth to confirm breakpoints.
