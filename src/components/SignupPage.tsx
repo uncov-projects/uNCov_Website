@@ -1,343 +1,414 @@
-// React + assets + icons import
-import React from "react";
-import signupBackground from "../assets/Signup_background.jpg";
-import { FcGoogle } from "react-icons/fc";
-import { FaLinkedinIn, FaGithub } from "react-icons/fa";
-import "../styles/SignupPage.css";
-import { supabase } from "../supabaseClient";
+import React, { useState, useEffect } from "react";
 
-// SignupPage component
-const SignupPage: React.FC = () => {
-  // Shared input styles for reuse across input fields
+import { FcGoogle } from "react-icons/fc";
+import { FaLinkedinIn } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import "../styles/SignupPage.css";
+import { supabase } from "../utils/supabaseClient";
+import { Link } from "react-router-dom";
+import slide1 from "../assets/Signup_background.jpg";
+import slide2 from "../assets/Signup_background2.jpg";
+import slide3 from "../assets/Signup_background3.png";
+export default function SignupPage() {
   const sharedInputStyle: React.CSSProperties = {
     backgroundColor: "#2a2a2a",
     border: "1px solid #404040",
     borderRadius: "0.75rem",
-    padding: "1.25rem 1rem",
-    fontSize: "1.5rem",
+    padding: "0.6rem 0.8rem",
+    fontSize: "0.8rem",
     color: "#ffffff",
+    marginBottom: "0.1rem",
   };
-  const handleOAuthLogin = async (provider: 'google' | 'github' | 'linkedin_oidc') => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: window.location.origin, // Where Supabase will redirect after login
-    },
-  })
 
-  if (error) {
-    console.error("OAuth login error:", error.message)
-  }
-}
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [termsAccepted, setTermsAccepted] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
+  const handleOAuthLogin = async (
+    provider: "google" | "github" | "linkedin_oidc"
+  ) => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo: window.location.origin },
+    });
+    if (error) console.error("OAuth login error:", error.message);
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage("");
+    if (!termsAccepted) {
+      setErrorMessage("You must accept the terms and conditions.");
+      return;
+    }
+    if (!firstName || !lastName || !email || !password) {
+      setErrorMessage("Please fill in all required fields.");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { first_name: firstName, last_name: lastName, phone } },
+    });
+    setLoading(false);
+    if (error) {
+      setErrorMessage(error.message);
+    } else {
+      alert(
+        "Signup successful! Please check your email to verify your account."
+      );
+    }
+  };
+  const images = [slide1, slide2, slide3]; 
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    // Full screen layout split into two halves
-    <div className="h-screen flex m-0 p-0">
-      {/* Left section: image + gradient + overlay + slogan */}
+    <div className="min-h-screen bg-[#3B334B] flex justify-center items-center p-8">
+      {/* Main Card */}
+      <div className="flex w-[1180px] h-[660px] bg-[#241F2D] rounded-[1.5rem] shadow-xl overflow-hidden">
+        {/* Left Side - Sliding carousel */}
+<div
+  className="relative w-1/2 overflow-hidden flex items-center justify-center"
+  style={{
+    margin: "1rem",
+    borderRadius: "1.5rem",
+    backgroundColor: "#000",
+    height: "630px", 
+  }}
+>
+  {/* Images container */}
+  <div
+    className="flex"
+    style={{
+      transform: `translateX(-${currentImage * 100}%)`,
+      transition: "transform 700ms ease-in-out",
+      width: `${images.length * 100}%`,
+      height: "100%",
+    }}
+  >
+    {images.map((img, index) => (
       <div
-        className="flex-1 left-section bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 relative"
+        key={index}
+        className="flex-shrink-0 flex items-center justify-center"
+        style={{ width: "100%", height: "100%" }}
+      >
+        <img
+          src={img}
+          alt={`Slide ${index}`}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover", 
+          }}
+        />
+      </div>
+    ))}
+  </div>
+
+  {/* Overlay text + progress bars */}
+  <div className="absolute inset-0 flex flex-col justify-end p-8 text-white z-10">
+    <div className="text-center">
+      <h1
+        className="text-white font-bold leading-tight"
         style={{
-          backgroundImage: `url(${signupBackground})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
+          fontSize: "1.8rem",
+          marginBottom: "2rem",
+          marginTop: "30rem",
+          color: "#ffffff",
         }}
       >
-        {/* Semi-transparent black overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        Capturing Moments,
+        <br />
+        Creating Memories
+      </h1>
+    </div>
 
-        {/* Main content over image */}
-        <div className="relative z-10 h-full flex flex-col p-8">
-          {/* Placeholder for potential top header (commented out) */}
-          <div className="flex-1"></div> {/* Spacer to push slogan to bottom */}
-          {/* Slogan section */}
-          <div className="flex flex-col items-center space-y-8">
-            <div className="text-center">
-              <h1
-                className="text-white font-bold leading-tight"
-                style={{
-                  fontSize: "4.5rem",
-                  color: "#ffffff",
-                  marginBottom: "2rem",
-                }}
-              >
-                Capturing Moments,
-                <br />
-                Creating Memories
-              </h1>
-            </div>
-
-            {/* Progress indicators (active dot is last) */}
-            <div className="flex" style={{ gap: "1rem", marginBottom: "2rem" }}>
-              <div
-                style={{
-                  width: "3rem",
-                  height: "6px",
-                  backgroundColor: "#ffffff",
-                  opacity: 0.4,
-                  borderRadius: "3px",
-                }}
-              />
-              <div
-                style={{
-                  width: "3rem",
-                  height: "6px",
-                  backgroundColor: "#ffffff",
-                  opacity: 0.4,
-                  borderRadius: "3px",
-                }}
-              />
-              <div
-                style={{
-                  width: "3rem",
-                  height: "6px",
-                  backgroundColor: "#ffffff",
-                  opacity: 1,
-                  borderRadius: "3px",
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right section: Signup form */}
-      <div className="flex-1" style={{ backgroundColor: "#1a1a1a" }}>
+    {/* Progress bars */}
+    <div
+      className="flex"
+      style={{
+        gap: "1rem",
+        marginBottom: "2rem",
+        justifyContent: "center",
+      }}
+    >
+      {images.map((_, idx) => (
         <div
-          className="h-full flex flex-col justify-start items-center"
-          style={{ paddingTop: "120px" }}
-        >
-          <div className="w-full max-w-sm">
-            {/* Heading and login redirect */}
-            <div className="text-center mb-12">
+          key={idx}
+          onClick={() => setCurrentImage(idx)}
+          style={{
+            width: idx === currentImage ? "3rem" : "2rem",
+            height: idx === currentImage ? "6px" : "5px",
+            backgroundColor: "#ffffff",
+            opacity: idx === currentImage ? 1 : 0.4,
+            borderRadius: "3px",
+            cursor: "pointer",
+          }}
+        />
+      ))}
+    </div>
+  </div>
+</div>
+
+
+
+        {/* Right Side - Signup Form */}
+        <div className="w-1/2 bg-[#241F2D] flex justify-center  p-8">
+          <div
+            className="w-full max-w-md "
+            style={{ marginTop: "2rem",marginLeft: "4rem", marginRight: "4rem" }}
+          >
+            <div className="text-center mb-8">
               <h1
                 className="font-bold"
                 style={{
-                  fontSize: "3rem",
-                  lineHeight: "1.2",
-                  color: "#ffffff",
+                  fontSize: "1.5rem",
+                  color: "#fff",
+                  textAlign: "left",
+                  marginTop: "2rem",
+                  marginBottom: "1rem",
                 }}
               >
                 Create an account
               </h1>
               <p
-                className="mt-2"
+                className="mt-1"
                 style={{
-                  fontSize: "1.25rem",
+                  fontSize: "0.6rem",
                   color: "#6b7280",
-                  marginBottom: "3rem",
+                  marginBottom: "0.8rem",
+                  textAlign: "left",
                 }}
               >
                 Already have an account?
-                <a
-                  href="#"
+                <Link
+                  to="/login"
                   className="hover:underline ml-1"
-                  style={{ color: "#ffffff" }}
+                  style={{ color: "#fff", paddingLeft: "0.5rem" }}
                 >
                   Log in
-                </a>
+                </Link>
               </p>
             </div>
 
-            {/* Signup form starts */}
-            <div style={{ marginLeft: "6rem", marginRight: "6rem" }}>
-              <form>
-                {/* Form inputs with spacing */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    rowGap: "2rem",
-                  }}
-                >
-                  {/* First name and last name side by side */}
-                  <div
-                    className="grid grid-cols-2"
-                    style={{ columnGap: "2rem" }}
-                  >
-                    <input
-                      type="text"
-                      placeholder="Fletcher"
-                      className="w-full focus:outline-none focus:ring-1 focus:ring-gray-500"
-                      style={sharedInputStyle}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Last name"
-                      className="w-full focus:outline-none focus:ring-1 focus:ring-gray-500"
-                      style={sharedInputStyle}
-                    />
-                  </div>
+            {errorMessage && (
+              <div
+                style={{
+                  color: "red",
+                  marginBottom: "0.8rem",
+                  textAlign: "center",
+                }}
+              >
+                {errorMessage}
+              </div>
+            )}
 
-                  {/* Email input */}
+            <form onSubmit={handleSignup}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  rowGap: "1rem",
+                  marginTop: "1.5rem",
+                }}
+              >
+                <div className="grid grid-cols-2" style={{ columnGap: "1rem" }}>
                   <input
-                    type="email"
-                    placeholder="Email"
+                    type="text"
+                    placeholder="First name"
                     className="w-full focus:outline-none focus:ring-1 focus:ring-gray-500"
                     style={sharedInputStyle}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
-
-                  {/* Password input */}
-                  <div className="relative">
-                    <input
-                      type="password"
-                      placeholder="Enter your password"
-                      className="w-full pr-12 focus:outline-none focus:ring-1 focus:ring-gray-500"
-                      style={sharedInputStyle}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    placeholder="Last name"
+                    className="w-full focus:outline-none focus:ring-1 focus:ring-gray-500"
+                    style={sharedInputStyle}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                 </div>
-              </form>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full focus:outline-none focus:ring-1 focus:ring-gray-500"
+                  style={sharedInputStyle}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {/* Phone number input */}
+                <input
+                  type="tel"
+                  placeholder="Phone number"
+                  className="w-full focus:outline-none focus:ring-1 focus:ring-gray-500"
+                  style={sharedInputStyle}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <div className="relative">
+                  <input
+                    type="password"
+                    placeholder="Enter your password"
+                    className="w-full pr-12 focus:outline-none focus:ring-1 focus:ring-gray-500"
+                    style={sharedInputStyle}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
 
-              {/* Terms and conditions checkbox */}
               <div
                 className="flex items-center"
                 style={{
                   marginTop: "2rem",
-                  marginBottom: "2rem",
-                  columnGap: "1rem",
+                  marginBottom: "1rem",
+                  columnGap: "0.5rem",
                 }}
               >
                 <input
                   type="checkbox"
                   id="terms"
                   style={{
-                    width: "20px",
-                    height: "20px",
+                    width: "10px",
+                    height: "10px",
                     backgroundColor: "#2a2a2a",
                     border: "1px solid #404040",
                     borderRadius: "4px",
                   }}
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
                 />
                 <label
                   htmlFor="terms"
-                  style={{
-                    fontSize: "1.125rem",
-                    color: "#9ca3af",
-                    lineHeight: "1.2",
-                  }}
+                  style={{ fontSize: "0.7rem", color: "#9ca3af" }}
                 >
                   I agree to the{" "}
                   <a
                     href="#"
                     className="hover:underline"
-                    style={{ color: "#ffffff" }}
+                    style={{ color: "#fff" }}
                   >
                     Terms & Conditions
                   </a>
                 </label>
               </div>
 
-              {/* Submit button */}
               <button
                 type="submit"
                 className="w-full rounded-lg font-semibold hover:opacity-90 transition-opacity"
                 style={{
                   backgroundColor: "#7c3aed",
-                  fontSize: "1.2rem",
-                  marginBottom: "2rem",
-                  padding: "1.2rem 0",
-                  color: "#ffffff",
+                  fontSize: "0.8rem",
+                  marginTop: "1rem",
+                  marginBottom: "1.5rem",
+                  padding: "0.75rem 0",
+                  color: "#fff",
+                  borderRadius: "0.75rem",
+                  border: "none",
+                }}
+                disabled={loading}
+              >
+                {loading ? "Creating..." : "Create account"}
+              </button>
+            </form>
+
+            <div
+              className="flex items-center"
+              style={{
+                color: "#6b7280",
+                fontSize: "0.5rem",
+                marginBottom: "1rem",
+              }}
+            >
+              <div
+                style={{
+                  flexGrow: 1,
+                  height: "1px",
+                  backgroundColor: "#404040",
+                  marginRight: "1rem",
+                }}
+              />
+              <span>Or register with</span>
+              <div
+                style={{
+                  flexGrow: 1,
+                  height: "1px",
+                  backgroundColor: "#404040",
+                  marginLeft: "1rem",
+                }}
+              />
+            </div>
+
+            {/* Social signup buttons */}
+            <div className="flex justify-between" style={{ gap: "1rem" }}>
+              {/* Google button */}
+              <button
+                onClick={() => handleOAuthLogin("google")}
+                type="button"
+                className="flex items-center justify-center flex-1 rounded-lg hover:opacity-90 transition-opacity"
+                style={{
+                  backgroundColor: "#2a2a2a",
+                  border: "1px solid #404040",
+                  padding: "0.4rem",
                 }}
               >
-                Create account
+                <FcGoogle size={20} style={{ marginRight: "0.5rem" }} />
               </button>
 
-              {/* Divider with text */}
-              <div
-                className="flex items-center mb-8"
+              {/* LinkedIn button */}
+              <button
+                onClick={() => handleOAuthLogin("linkedin_oidc")}
+                type="button"
+                className="flex items-center justify-center flex-1 rounded-lg hover:opacity-90 transition-opacity"
                 style={{
-                  color: "#6b7280",
-                  fontSize: "1rem",
-                  marginBottom: "2rem",
+                  backgroundColor: "#2a2a2a",
+                  border: "1px solid #404040",
+                  padding: "0.2rem",
                 }}
               >
-                <div
-                  style={{
-                    flexGrow: 1,
-                    height: "1px",
-                    backgroundColor: "#404040",
-                    marginRight: "1rem",
-                  }}
+                <FaLinkedinIn
+                  size={20}
+                  color="#0077b5"
+                  style={{ marginRight: "0.5rem" }}
                 />
-                <span>Or register with</span>
-                <div
-                  style={{
-                    flexGrow: 1,
-                    height: "1px",
-                    backgroundColor: "#404040",
-                    marginLeft: "1rem",
-                  }}
+              </button>
+
+              {/* GitHub button */}
+              <button
+                onClick={() => handleOAuthLogin("github")}
+                type="button"
+                className="flex items-center justify-center flex-1 rounded-lg hover:opacity-90 transition-opacity"
+                style={{
+                  backgroundColor: "#2a2a2a",
+                  border: "1px solid #404040",
+                  padding: "0.6rem",
+                }}
+              >
+                <FaGithub
+                  size={20}
+                  color="#ffffff"
+                  style={{ marginRight: "0.5rem" }}
                 />
-              </div>
-
-              {/* Social signup buttons */}
-              <div className="flex justify-between" style={{ gap: "1rem" }}>
-                {/* Google button */}
-                <button  onClick={() => handleOAuthLogin('google')}
-                  type="button"
-                  className="flex items-center justify-center flex-1 rounded-lg hover:opacity-90 transition-opacity"
-                  style={{
-                    backgroundColor: "#2a2a2a",
-                    border: "1px solid #404040",
-                    padding: "1rem",
-                  }}
-                >
-                  <FcGoogle size={24} style={{ marginRight: "0.5rem" }} />
-                  <span style={{ color: "#ffffff", fontSize: "1rem" }}>
-                    Google
-                  </span>
-                </button>
-
-                {/* LinkedIn button */}
-                <button onClick={() => handleOAuthLogin('linkedin_oidc')}
-                  type="button"
-                  className="flex items-center justify-center flex-1 rounded-lg hover:opacity-90 transition-opacity"
-                  style={{
-                    backgroundColor: "#2a2a2a",
-                    border: "1px solid #404040",
-                    padding: "1rem",
-                  }}
-                >
-                  <FaLinkedinIn
-                    size={24}
-                    color="#0077b5"
-                    style={{ marginRight: "0.5rem" }}
-                  />
-                  <span style={{ color: "#ffffff", fontSize: "1rem" }}>
-                    LinkedIn
-                  </span>
-                </button>
-
-                {/* GitHub button */}
-                <button onClick={() => handleOAuthLogin('github')}
-                  type="button"
-                  className="flex items-center justify-center flex-1 rounded-lg hover:opacity-90 transition-opacity"
-                  style={{
-                    backgroundColor: "#2a2a2a",
-                    border: "1px solid #404040",
-                    padding: "1rem",
-                  }}
-                >
-                  <FaGithub
-                    size={24}
-                    color="#ffffff"
-                    style={{ marginRight: "0.5rem" }}
-                  />
-                  <span style={{ color: "#ffffff", fontSize: "1rem" }}>
-                    GitHub
-                  </span>
-                </button>
-              </div>
-              {/* End of social buttons */}
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-// Export SignupPage for use in app
-export default SignupPage;
+}
