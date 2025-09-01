@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import React from "react"
-import Image from "next/image"
-import { Swiper, SwiperSlide } from "swiper/react"
+import React from "react";
+import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css"
-import "swiper/css/effect-coverflow"
-import "swiper/css/pagination"
-import "swiper/css/navigation"
-import { SparklesIcon } from "lucide-react"
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { SparklesIcon } from "lucide-react";
 import {
   Autoplay,
   EffectCoverflow,
   Navigation,
   Pagination,
-} from "swiper/modules"
+} from "swiper/modules";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 
 interface CarouselProps {
-  images: { src: string; alt: string }[]
-  autoplayDelay?: number
-  showPagination?: boolean
-  showNavigation?: boolean
+  images: { src: string; alt: string }[];
+  autoplayDelay?: number;
+  showPagination?: boolean;
+  showNavigation?: boolean;
 }
 
 export const CardCarousel: React.FC<CarouselProps> = ({
@@ -40,8 +40,8 @@ export const CardCarousel: React.FC<CarouselProps> = ({
   .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 300px;
-    /* height: 300px; */
+    width: 400px;
+   height: 600px;
     /* margin: 20px; */
   }
   
@@ -57,20 +57,18 @@ export const CardCarousel: React.FC<CarouselProps> = ({
   .swiper-3d .swiper-slide-shadow-right{
     background: none;
   }
-  `
+  `;
   return (
     <section className="w-ace-y-4">
       <style>{css}</style>
       <div className="mx-auto w-full   p-2  ">
         <div className="relative mx-auto flex w-full flex-col p-2  md:items-start md:gap-8  md:p-2">
-          
           <div className="flex flex-col justify-center pb-2 pl-4 pt-14 md:items-center">
             <div className="flex gap-2">
               <div>
                 <h3 className="text-4xl opacity-85 font-bold tracking-tight">
                   Testimonial
                 </h3>
-                
               </div>
             </div>
           </div>
@@ -78,7 +76,7 @@ export const CardCarousel: React.FC<CarouselProps> = ({
           <div className="flex w-full items-center justify-center gap-4">
             <div className="w-full">
               <Swiper
-                spaceBetween={50}
+                spaceBetween={80}
                 autoplay={{
                   delay: autoplayDelay,
                   disableOnInteraction: false,
@@ -137,5 +135,5 @@ export const CardCarousel: React.FC<CarouselProps> = ({
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

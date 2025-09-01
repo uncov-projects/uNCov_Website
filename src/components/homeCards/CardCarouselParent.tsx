@@ -12,6 +12,7 @@ const CardCarouselParent = () => {
   ];
 
   return (
+    <div>
     <section className="w-full max-w-6xl mx-auto px-6 py-20">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
@@ -40,9 +41,13 @@ const CardCarouselParent = () => {
         </div>
       </div>
 
+      
+    </section>
+    <div className="w-full max-w-[100rem] mx-auto">
       {/* Carousel Section */}
       <CardCarousel images={images} />
-    </section>
+    </div>
+    </div>
   );
 };
 

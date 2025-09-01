@@ -22,18 +22,29 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-3">
-          {["Community", "Features", "Pricing"].map((text) => (
-            <Link
-              key={text}
-              href="#"
-              className="px-5 py-2 rounded-xl bg-[#F7F7FE] text-[#231F37] font-medium text-base transition-colors hover:bg-[#E2E2FB]"
-            >
-              {text}
-            </Link>
-          ))}
+          <Link
+            href="/livemagzone"
+            className="px-5 py-2 rounded-xl bg-[#F7F7FE] text-[#231F37] font-medium text-base transition-colors hover:bg-[#E2E2FB]"
+          >
+            Community
+          </Link>
 
           <Link
-            href="#"
+            href="/features"
+            className="px-5 py-2 rounded-xl bg-[#F7F7FE] text-[#231F37] font-medium text-base transition-colors hover:bg-[#E2E2FB]"
+          >
+            Features
+          </Link>
+
+          <Link
+            href="/pricing"
+            className="px-5 py-2 rounded-xl bg-[#F7F7FE] text-[#231F37] font-medium text-base transition-colors hover:bg-[#E2E2FB]"
+          >
+            Pricing
+          </Link>
+
+          <Link
+            href="/get-started"
             className="ml-1 px-6 py-2 rounded-xl bg-gradient-to-r from-[#A48FFB] to-[#7766F5] text-white font-semibold text-base shadow-[0_1px_16px_0_rgba(131,112,254,0.13)] tracking-wide transition-all hover:brightness-105"
           >
             Get started
@@ -52,26 +63,35 @@ const Navbar: React.FC = () => {
       {/* Mobile Dropdown */}
       {isOpen && (
         <div className="md:hidden mt-4 flex flex-col gap-3 bg-white/90 backdrop-blur-lg rounded-xl shadow-lg p-4 animate-slideDown">
-          {["Community", "Features", "Pricing"].map((text) => (
-            <Link
-              key={text}
-              href="#"
-              className="px-4 py-2 rounded-lg text-[#231F37] font-medium text-base bg-[#F7F7FE] hover:bg-[#E2E2FB] transition-colors"
-            >
-              {text}
-            </Link>
-          ))}
+          <Link
+            href="/livemagzone"
+            className="px-4 py-2 rounded-lg text-[#231F37] font-medium text-base bg-[#F7F7FE] hover:bg-[#E2E2FB] transition-colors"
+          >
+            Community
+          </Link>
 
           <Link
-            href="#"
+            href="/features"
+            className="px-4 py-2 rounded-lg text-[#231F37] font-medium text-base bg-[#F7F7FE] hover:bg-[#E2E2FB] transition-colors"
+          >
+            Features
+          </Link>
+
+          <Link
+            href="/pricing"
+            className="px-4 py-2 rounded-lg text-[#231F37] font-medium text-base bg-[#F7F7FE] hover:bg-[#E2E2FB] transition-colors"
+          >
+            Pricing
+          </Link>
+
+          <Link
+            href="/get-started"
             className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#A48FFB] to-[#7766F5] text-white font-semibold text-base shadow-md text-center"
           >
             Get started
           </Link>
         </div>
       )}
-
-      
     </nav>
   );
 };

@@ -4,7 +4,7 @@ import { FaTwitter, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-b from-gray-50 to-gray-100 mt-16">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-2">
         {/* Top Section */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12">
           {/* Left Section */}
@@ -13,7 +13,9 @@ export default function Footer() {
               <div className="bg-purple-600 text-white rounded-md px-3 py-2 font-bold text-2xl shadow-md">
                 G
               </div>
-              <span className="text-2xl font-semibold text-gray-800">Graphy</span>
+              <span className="text-2xl font-semibold text-gray-800">
+                Graphy
+              </span>
             </div>
 
             <p className="mt-6 text-gray-600 leading-relaxed text-lg">
@@ -47,10 +49,26 @@ export default function Footer() {
                 Product
               </h3>
               <ul className="space-y-2 text-gray-600">
-                <li><Link href="#" className="hover:text-purple-600">Features</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Pricing</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Integrations</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Changelog</Link></li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Integrations
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Changelog
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -59,10 +77,26 @@ export default function Footer() {
                 Resources
               </h3>
               <ul className="space-y-2 text-gray-600">
-                <li><Link href="#" className="hover:text-purple-600">Documentation</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Tutorials</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Blog</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Support</Link></li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Documentation
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Tutorials
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Support
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -71,10 +105,26 @@ export default function Footer() {
                 Company
               </h3>
               <ul className="space-y-2 text-gray-600">
-                <li><Link href="#" className="hover:text-purple-600">About</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Careers</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Contact</Link></li>
-                <li><Link href="#" className="hover:text-purple-600">Partners</Link></li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-purple-600">
+                    Partners
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -82,11 +132,17 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-200 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
-          <p>© 2025 Graphy. All rights reserved.</p>
+          <p className="m-0">© 2025 Graphy. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-purple-600">Privacy Policy</Link>
-            <Link href="#" className="hover:text-purple-600">Terms of Service</Link>
-            <Link href="#" className="hover:text-purple-600">Cookies Settings</Link>
+            <Link href="#" className="hover:text-purple-600">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="hover:text-purple-600">
+              Terms of Service
+            </Link>
+            <Link href="#" className="hover:text-purple-600">
+              Cookies Settings
+            </Link>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
+    "ace-builds": "^1.43.2",
     "antd": "^5.27.1",
     "class-variance-authority": "^0.7.1",
     "flowbite-react": "^0.12.7",
@@ -18,6 +19,7 @@
     "next": "15.4.4",
     "next-themes": "^0.4.6",
     "react": "19.1.0",
+    "react-ace": "^14.0.1",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.8.1",
