@@ -13,7 +13,7 @@ const HeroContent: React.FC = () => {
   ];
 
   return (
-    <section className="relative flex flex-col lg:flex-row items-center justify-between w-full min-h-[800px] px-[5vw] py-10 lg:py-20 overflow-hidden rounded-[32px] mt-15 lg:mt-0">
+    <section className="relative flex flex-col lg:flex-row items-center justify-between w-full min-h-[820px] px-[5vw] py-10 lg:py-20 overflow-hidden rounded-[32px] ">
       
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-br from-[#A48FFB]/40 to-[#7766F5]/30 blur-[120px] rounded-full opacity-60 z-0" />
 
@@ -44,18 +44,18 @@ const HeroContent: React.FC = () => {
       </div>
 
       {/* RIGHT SIDE - AntD Carousel */}
-      <div className="relative z-10 w-full lg:w-1/2 flex justify-end ml-90 lg:ml-0 mt-10 lg:mt-0 animate-fadeIn">
+      <div className="relative z-10 w-full lg:w-1/2 flex justify-end mt-10 lg:mt-0 animate-fadeIn">
         <Carousel
           autoplay
           autoplaySpeed={4000}
           effect="fade"
           dots={{ className: "custom-dots" }}
-          className="w-[90%] max-w-[36.25rem] h-[46.875rem] rounded-2xl shadow-2xl overflow-hidden"
+          className="w-full max-w-[600px] h-[600px] rounded-3xl shadow-2xl overflow-hidden"
         >
           {images.map((img, index) => (
             <div
               key={index}
-              className="relative w-full h-[800px] aspect-[16/9] group"
+              className="relative w-full h-[900px] aspect-[16/9] group"
             >
               <Image
                 src={img.src}
